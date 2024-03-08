@@ -52,6 +52,7 @@ public:
 class Entity
 {
 public:
+	const double* arr = new double[100];
 	SubEntity* _sub_entity_ptr;
 
 	Entity(const SubEntity& sub_entity)
@@ -60,6 +61,13 @@ public:
 
 		_sub_entity_ptr = new SubEntity(sub_entity);
 	}
+	Entity(SubEntity&& sub_entity)
+	{
+		std::cout << "Entity: Created RVal!\n";
+
+		_sub_entity_ptr = new SubEntity(std::move(sub_entity));
+	}
+
 	Entity(const Entity& other)
 	{
 		std::cout << "Entity: Copy!\n";
@@ -71,7 +79,7 @@ public:
 		std::cout << "Entity: Move!\n";
 
 		_sub_entity_ptr = other._sub_entity_ptr;
-		other._sub_entity_ptr = nullptr; // required
+		//other._sub_entity_ptr = nullptr; // required
 	}
 	Entity& operator=(const Entity& other)
 	{
@@ -95,4 +103,10 @@ public:
 
 int main()
 {
+	Entity entity(SubEntity("One", "Two", "Three"));
+	std::cout << "=========Entity Created=========\n\n";
+
+	std::cout << "Entity Move Constructor\n\n";
+	Entity entity_2 = entity;
+	return 0;
 }
