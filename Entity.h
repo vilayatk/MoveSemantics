@@ -4,9 +4,9 @@
 class Entity
 {
 public:
-	SubEntity* _sub_entity_ptr;
+	SubEntity m_sub_entity;
 
-	Entity(const SubEntity& sub_entity);
+	Entity(SubEntity&& sub_entity) noexcept;
 	Entity(const Entity& other);
 	Entity(Entity&& other) noexcept;
 	Entity& operator=(const Entity& other);

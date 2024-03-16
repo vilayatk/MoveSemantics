@@ -9,6 +9,7 @@ public:
 	std::string _some_string_2;
 	std::string _some_string_3;
 
+	SubEntity() = default;
 	SubEntity(const std::string& string_1, const std::string& string_2, const std::string& string_3);
 	SubEntity(const SubEntity& other);
 	SubEntity(SubEntity&& other) noexcept;

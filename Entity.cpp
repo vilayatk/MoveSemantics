@@ -1,45 +1,42 @@
 #include "Entity.h"
 
-Entity::Entity(const SubEntity& sub_entity)
+Entity::Entity(SubEntity&& sub_entity) noexcept
 {
 	std::cout << "Entity: Created!\n";
 
-	_sub_entity_ptr = new SubEntity(sub_entity);
+	m_sub_entity = std::move(sub_entity);
 }
 
 Entity::Entity(const Entity& other) 
 {
 	std::cout << "Entity: Copy!\n";
 
-	_sub_entity_ptr = new SubEntity(*other._sub_entity_ptr);
+	m_sub_entity = other.m_sub_entity;
 }
 
 Entity::Entity(Entity&& other) noexcept
 {
 	std::cout << "Entity: Move!\n";
 
-	_sub_entity_ptr = other._sub_entity_ptr;
-	other._sub_entity_ptr = nullptr; // best practice to avoid double deletion and dangling pointers
+	m_sub_entity = std::move(other.m_sub_entity);
 }
 
 Entity& Entity::operator=(const Entity& other)
 {
 	std::cout << "Entity: Assignment Copy!\n";
 
-	_sub_entity_ptr = new SubEntity(*other._sub_entity_ptr);
+	m_sub_entity = other.m_sub_entity;
 	return *this;
 }
 Entity& Entity::operator=(Entity&& other) noexcept
 {
 	std::cout << "Entity: Assignment Move!\n";
 
-	_sub_entity_ptr = other._sub_entity_ptr;
-	other._sub_entity_ptr = nullptr;  // best practice to avoid double deletion and dangling pointers
+	m_sub_entity = other.m_sub_entity;
 	return *this;
 }
 
 Entity::~Entity()
 {
-	delete _sub_entity_ptr;
 	std::cout << "Entity: Destructed!\n";
 }
